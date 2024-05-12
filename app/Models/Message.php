@@ -16,4 +16,22 @@ class Message extends Model
         'group_id',
         'reciever_id',
     ];
+
+    public function reciever() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function sender() {
+        return $this->belongsTo(User::class);
+    }
+
+    public function group() {
+        return $this->belongsTo(Group::class);
+    }
+
+    public function attachments() {
+        return $this->hasMany(MessageAttachment::class);
+    }
+
+
 }
