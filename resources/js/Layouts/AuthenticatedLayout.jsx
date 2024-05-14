@@ -12,10 +12,6 @@ export default function Authenticated({ header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
 
-    useEffect(() => {
-        console.log('AuthenticatedLayout mounted');
-    }, []);
-
     return (
         <div className="min-h-screen bg-gray-100">
             <nav className="bg-white border-b border-gray-100">
