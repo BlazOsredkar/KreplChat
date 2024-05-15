@@ -1,5 +1,6 @@
 import { usePage } from "@inertiajs/react";
 import { useEffect } from "react";
+import { useState } from "react";
 
 
 const ChatLayout = ({ children }) => {
@@ -7,6 +8,7 @@ const ChatLayout = ({ children }) => {
     const page = usePage();
     const conversations = page.props.conversations;
     const selectedConversation = page.props.selectedConversation;
+    const [onlineUsers, setOnlineUsers] = useState({});
 
     console.log(conversations);
     console.log(selectedConversation);
@@ -18,7 +20,11 @@ const ChatLayout = ({ children }) => {
                 console.log('here', users);
             })
             .joining((user) => {
-                console.log('joining', user);
+                setOnlineUsers((prevOnlineUsers) => {
+                    const updatedUsers = { ...prevOnlineUsers };
+                    updatedUsers[user.id] = user;
+                    return updatedUsers;
+                });
             })
             .leaving((user) => {
                 console.log('leaving', user);
@@ -26,6 +32,10 @@ const ChatLayout = ({ children }) => {
             .error((error) => {
                 console.log('error', error);
             });
+
+        return () => {
+            Echo.leave('online');
+        }
     }, []);
 
     return (
