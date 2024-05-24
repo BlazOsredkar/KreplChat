@@ -3,13 +3,14 @@ import UserAvatar from "./UserAvatar";
 import GroupAvatar from "./GroupAvatar";
 import UserOptionsDropdown from "./UserOptionsDropdown";
 
+
 const ConversationItem = ({
     conversation,
     selectedConversation = null,
     online = null,
 }) => {
     const page = usePage();
-    const user = page.props.auth.user;
+    const currentUser = page.props.auth.user;
     let classes = " border-transparent";
     if (selectedConversation) {
         if (
@@ -77,3 +78,5 @@ const ConversationItem = ({
         </Link>
     );
 };
+
+export default ConversationItem;

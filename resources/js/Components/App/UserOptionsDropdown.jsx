@@ -1,7 +1,39 @@
 import { Menu, Transition } from "@headlessui/react";
-import { EllipsisVerticalIcon, LockOpenIcon } from "@heroicons/react/24/solid";
+import { EllipsisVerticalIcon, LockClosedIcon, LockOpenIcon, ShieldCheckIcon, UserIcon } from "@heroicons/react/24/solid";
+import axios from "axios";
+import { Fragment } from "react";
 
 export default function UserOptionsDropdown({ conversation }) {
+    const onBlockUser = () => {
+        console.log("Block User");
+        if (!conversation.is_user) {
+            return;
+        }
+
+        axios
+            .post(route("user.blockUnblock", conversation.id))
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+    const changeUserRole = () => {
+        console.log("Change User Role");
+        if (!conversation.is_user) {
+            return;
+        }
+
+        axios
+            .post(route("user.changeRole", conversation.id))
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
     return (
         <div>
             <Menu as="div" className="relative inline-block text-left">
@@ -26,7 +58,10 @@ export default function UserOptionsDropdown({ conversation }) {
                                     <button
                                         onClick={onBlockUser}
                                         className={`${
-                                            active ? "bg-black/30 text-white" : "bg-gray-100"}
+                                            active
+                                                ? "bg-black/30 text-white"
+                                                : "bg-gray-100"
+                                        }
                                             group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                     >
                                         {conversation.blocked_at && (
@@ -35,12 +70,43 @@ export default function UserOptionsDropdown({ conversation }) {
                                                 Unblock User
                                             </>
                                         )}
+                                        {!conversation.blocked_at && (
+                                            <>
+                                                <LockClosedIcon className="w-4 h-4 mr-2" />
+                                                Block User
+                                            </>
+                                        )}
                                     </button>
                                 )}
                             </Menu.Item>
                         </div>
                         <div className="px-1 py-1">
-                            <Menu.Item></Menu.Item>
+                            <Menu.Item>
+                                {({ active }) => (
+                                    <button
+                                        onClick={changeUserRole}
+                                        className={`${
+                                            active
+                                                ? "bg-black/30 text-white"
+                                                : "bg-gray-100"
+                                        }
+                                            group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                    >
+                                        {conversation.is_admin && (
+                                            <>
+                                                <UserIcon className="w-4 h-4 mr-2" />
+                                                Remove Admin
+                                            </>
+                                        )}
+                                        {!conversation.is_admin && (
+                                            <>
+                                                <ShieldCheckIcon className="w-4 h-4 mr-2" />
+                                                Make Admin
+                                            </>
+                                        )}
+                                    </button>
+                                )}
+                            </Menu.Item>
                         </div>
                     </Menu.Items>
                 </Transition>
