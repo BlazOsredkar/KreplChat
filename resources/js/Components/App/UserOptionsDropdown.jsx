@@ -43,7 +43,7 @@ export default function UserOptionsDropdown({ conversation }) {
                     </Menu.Button>
                 </div>
                 <Transition
-                    as="{Fragment}"
+                    as={Fragment}
                     enter="transition ease-out duration-100"
                     enterFrom="transform opacity-0 scale-95"
                     enterTo="transform opacity-100 scale-100"
@@ -60,7 +60,7 @@ export default function UserOptionsDropdown({ conversation }) {
                                         className={`${
                                             active
                                                 ? "bg-black/30 text-white"
-                                                : "bg-gray-100"
+                                                : "bg-black-100"
                                         }
                                             group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                     >
@@ -88,7 +88,7 @@ export default function UserOptionsDropdown({ conversation }) {
                                         className={`${
                                             active
                                                 ? "bg-black/30 text-white"
-                                                : "bg-gray-100"
+                                                : "bg-black-100"
                                         }
                                             group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                     >
